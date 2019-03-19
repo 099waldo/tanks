@@ -1,9 +1,15 @@
 New Features:
-    ☐ Make it so tanks will only shoot if it can see the player. 
+    ✔ Make it so tanks will only shoot if it can see the player. @done(19-03-18 17:47)
+    ☐ Add AI for stationary tanks. 
+        A state for computer players to be in so that they move their 
+        turrets around randomly trying to find a clear path to the player. This 
+        includes bounce shots. 
 
 Bugs:
     ☐ The player's activeBuls sometimes doesn't get reset when his bullets are destroyed. 
-        It seems like that when a bullet from the computer player tank collides with a bullet from the player, it doesn't tell the player that his bullet got destroyed for some reason. 
+        It seems like that when a bullet from the computer player tank collides 
+        with a bullet from the player, it doesn't tell the player that his 
+        bullet got destroyed for some reason. 
     
 Low Priority Tasks:
     ☐ Make a better way to randomize computer player tank shooting. 
