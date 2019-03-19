@@ -5,10 +5,26 @@
 
 extern Game game;
 
-void Ray::init()
+void Ray::init(sf::Vector2f pos, sf::Vector2f vel, float rot)
 {
-	radius = 1;
+	position = pos;
+	velocity = vel;
+	rotation = rot;
+
+	radius = 10;
+	bouncesLeft = 10;
 };
+
+int Ray::update()
+{
+	if (bouncesLeft == -1) { // Is this used with rays?
+		return 1;
+	}
+	if (hit) {
+		return 1;
+	}
+	return Move(); // Returns 1 if it hit a wall
+}
 
 bool Ray::CollidingWithTank()
 {
@@ -26,8 +42,12 @@ bool Ray::CollidingWithTank()
 			sqrtf(pointreletivetome.x * pointreletivetome.x +
 			      pointreletivetome.y * pointreletivetome.y);
 		if (magnitude < radius + game.tanks[i].radius) {
-			game.tanks[i].Push(velocity);
-			return true;
+			if (game.tanks[i].player == true) {
+				game.tanks[i].Push(velocity);
+				return true;
+			} else {
+				hit = true;
+			}
 		}
 	}
 	return false;
@@ -40,27 +60,19 @@ int Ray::Move()
 
 	position.x += newvel.x * speed;
 
-	if (CheckWallCollisions()) {
-		position.x -= newvel.x * speed;
-		velocity.x = velocity.x * -1;
-		rotation += 2 * (90 - rotation) + 180;
-		if (Bounce() == 1) {
-			return 1;
-		}
-		// std::cout << "Bullet hit wall" << std::endl;
-	}
+	// TODO: Make it so it starts another ray when it hits a wall.
+
+	if (CheckWallCollisions())
+		return 1;
+	if (CollidingWithTank())
+		return 2;
 
 	position.y += newvel.y * speed;
 
-	if (CheckWallCollisions()) {
-		position.y -= newvel.y * speed;
-		velocity.y = velocity.y * -1;
-		rotation += 2 * (90 - rotation);
-		if (Bounce() == 1) {
-			return 1;
-		}
-		// std::cout << "Bullet hit wall" << std::endl;
-	}
+	if (CheckWallCollisions())
+		return 1;
+	if (CollidingWithTank())
+		return 2;
 
 	return 0;
 }

@@ -51,7 +51,7 @@ int Tank::update()
 	FixRotation();
 	MoveTank();
 	if (CollidingWithBullet()) {
-		std::cout << "Got hit by bullet!!" << std::endl;
+		//std::cout << "Got hit by bullet!!" << std::endl;
 	}
 
 	PushVel = sf::Vector2f(0.f, 0.f);
@@ -95,7 +95,7 @@ void Tank::Shoot()
 	if (activeBuls < 0) {
 		activeBuls = 0;
 	}
-	if (activeBuls < maxBuls) {
+	if (activeBuls < maxBuls && canHitPlayer()) {
 		Bullet bul;
 		sf::Vector2f bulv;
 		bulv.x = 1 * cosf((turretrotation + 90) * (PI / 180));
@@ -128,11 +128,31 @@ bool Tank::canMove()
 
 bool Tank::canHitPlayer()
 {
+	// If we are the player this function doesn't need to be run.
+	if (player) {
+		return true;
+	}
 	Ray ray;
 	sf::Vector2f bulv;
 	bulv.x = 1 * cosf((turretrotation + 90) * (PI / 180));
 	bulv.y = -1 * sinf((turretrotation + 90) * (PI / 180));
 	ray.init(BulletSpawnPos(), bulv, turretrotation + 180);
+
+	bool done = false;
+	while (done != true) {
+		int value = ray.update();
+		if (value == 1) {
+			// std::cout << "Hit wall" << std::endl;
+			done = true;
+			return false;
+		}
+		if (value == 2) {
+			// std::cout << "Hit tank" << std::endl;
+			done = true;
+			return true;
+		}
+	}
+	return false;
 }
 
 // TODO: Change this to compare all of the player positions to see
