@@ -35,5 +35,6 @@
         "utility": "cpp",
         "cstddef": "cpp",
         "algorithm": "cpp"
-    }
+    },
+    "editor.rulers": [80]
 }
