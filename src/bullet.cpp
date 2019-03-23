@@ -25,10 +25,14 @@ void Bullet::init(sf::Vector2f pos, sf::Vector2f vel, float rot)
 int Bullet::update()
 {
 	if (bouncesLeft == -1) {
-		DestroyMe();
 		return 1;
 	}
 	return MoveBullet();
+}
+
+void Bullet::DestroyMe()
+{
+	game.tanks[Mtank].activeBuls -= 1;
 }
 
 int Bullet::MoveBullet()
@@ -43,7 +47,6 @@ int Bullet::MoveBullet()
 		velocity.x = velocity.x * -1;
 		rotation += 2 * (90 - rotation) + 180;
 		if (Bounce() == 1) {
-			DestroyMe();
 			return 1;
 		}
 		// std::cout << "Bullet hit wall" << std::endl;
@@ -56,7 +59,6 @@ int Bullet::MoveBullet()
 		velocity.y = velocity.y * -1;
 		rotation += 2 * (90 - rotation);
 		if (Bounce() == 1) {
-			DestroyMe();
 			return 1;
 		}
 		// std::cout << "Bullet hit wall" << std::endl;
@@ -64,7 +66,6 @@ int Bullet::MoveBullet()
 
 	// Check bullet bullet collisions.
 	if (CollidingWithBullet()) {
-		DestroyMe();
 		return 1;
 	}
 
@@ -131,9 +132,4 @@ bool Bullet::CollidingWithBullet()
 		}
 	}
 	return false;
-}
-
-void Bullet::DestroyMe()
-{
-	game.tanks[Mtank].activeBuls -= 1;
 }

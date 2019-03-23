@@ -161,6 +161,7 @@ class Game {
 
 			// Delete bullets that got destroyed this frame
 			for (int i = 0; i < bulletsToDelete.size(); i++) {
+				bullets[bulletsToDelete[i]].DestroyMe();
 				bullets.erase(bullets.begin() +
 					      bulletsToDelete[i]);
 			}

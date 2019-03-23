@@ -12,11 +12,12 @@ class Bullet : public GameObject {
 	void init(sf::Vector2f pos, sf::Vector2f vel, float rot);
 	int update();
 
+	void DestroyMe();
+
     private:
 	int MoveBullet();
 	void FixRotation();
 	int Bounce();
 	void SetOriginToSprite();
 	bool CollidingWithBullet();
-	void DestroyMe();
 };
