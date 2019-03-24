@@ -16,6 +16,7 @@ class Tank : public GameObject {
 	int type;
 	float turretrotation = 0.f;
 	float speed = 3.f;
+	float speedFactor = 1;
 	bool player = false;
 	int shootingProb;
 	int vectorAdr;
@@ -64,6 +65,7 @@ class Tank : public GameObject {
 
 	void MakeDecision();
 	void ChangeDirection();
+	void ChangeSpeed();
 
 	void draw(sf::RenderTarget &target,
 		  sf::RenderStates states) const override

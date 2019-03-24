@@ -184,6 +184,7 @@ void Tank::MakeDecision()
 	// if(lastDecision == nulls)
 	double seconds = difftime(time(NULL), lastDecision);
 	if (seconds > 1) {
+		ChangeSpeed();
 		if (randomint() < 10) {
 			ChangeDirection();
 			lastDecision = time(NULL);
@@ -204,6 +205,16 @@ void Tank::ChangeDirection()
 	newvel.y = sinf(j * (PI / 180));
 
 	velocity = newvel;
+}
+
+void Tank::ChangeSpeed()
+{
+	float i = random() / 1000000000.0f;
+	if (i > 1)
+		i -= 1;
+	if (i > 1)
+		i -= 1;
+	speedFactor = i;
 }
 
 void Tank::LoadSettings()
@@ -251,7 +262,7 @@ int Tank::MoveTank()
 
 	// Move tank to the new position but if we are touching anything,
 	// move it back to it's original position.
-	position.x += newvel.x * speed;
+	position.x += newvel.x * speed * speedFactor;
 
 	// Check for the rare occasion when the tank is touching another
 	// tank and a wall at the same time.
@@ -270,7 +281,7 @@ int Tank::MoveTank()
 		position.x -= newvel.x * speed;
 	}
 
-	position.y += newvel.y * speed;
+	position.y += newvel.y * speed * speedFactor;
 
 	if (CheckWallCollisions() || CollidingWithTank()) {
 		if (canMove())
