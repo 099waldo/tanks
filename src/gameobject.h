@@ -7,7 +7,7 @@ class GameObject : public sf::Drawable {
 	sf::Texture tex;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
-	float rotation = 0.f;
+	float rotation = 0.f; // In degrees
 	int radius;
 	void init();
 	void update();

@@ -127,12 +127,12 @@ class Game {
 			// Update Tanks
 			for (int i = 0; i < tanks.size(); i++) {
 				tanks[i].update();
-				if (tanks[i].player) {
+				if (tanks[i].player) { // Tank is a player
 					sf::Vector2f mousepos = (sf::Vector2f)
 						sf::Mouse::getPosition(window);
 					tanks[i].PointTurretAt(mousepos);
 					tanks[i].FaceVelocityDir();
-				} else {
+				} else { // Tank is a computer player
 					tanks[i].PointTurretAt(
 						tanks[i].playerPos());
 					tanks[i].FaceVelocityDir();
